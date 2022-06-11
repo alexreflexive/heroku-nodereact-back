@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon src/index.js",
-    "heroku-postbuild": "cd src/frontend && npm install && npm run build"
+    "start": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
