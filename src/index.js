@@ -13,7 +13,13 @@ function main() {
 
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
+  console.log(
+    "-----------------------------------------------------------------"
+  );
   console.log(path.join(__dirname, "frontend", "build"));
+  console.log(
+    "-----------------------------------------------------------------"
+  );
   app.register(FastifyStatic, {
     root: path.join(__dirname, "frontend", "build"),
     prefix: "/", // optional: default '/'
@@ -24,7 +30,7 @@ function main() {
   });
 
   app.register(fp(cors));
-  app.register(routes);
+  app.register(routes, { prefix: "/api" });
 
   app.listen(process.env.PORT, process.env.HOST, () => {
     console.log(
