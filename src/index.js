@@ -4,10 +4,24 @@ import FastifyStatic from "@fastify/static";
 import { config } from "dotenv";
 import cors from "./lib/cors.js";
 import routes from "./routes.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 function main() {
   config();
   const app = fastify({ logger: true });
+
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  console.log(path.join(__dirname, "frontend", "build"));
+  app.register(FastifyStatic, {
+    root: path.join(__dirname, "frontend", "build"),
+    prefix: "/", // optional: default '/'
+  });
+  // this will work with fastify-static and send ./static/index.html
+  app.setNotFoundHandler((req, res) => {
+    res.sendFile("index.html");
+  });
 
   app.register(fp(cors));
   app.register(routes);
