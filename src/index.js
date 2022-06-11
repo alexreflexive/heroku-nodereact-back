@@ -20,6 +20,8 @@ function main() {
   console.log(
     "-----------------------------------------------------------------"
   );
+  app.register(fp(cors));
+  app.register(routes, { prefix: "/api" });
   app.register(FastifyStatic, {
     root: path.join(__dirname, "frontend", "build"),
     prefix: "/", // optional: default '/'
@@ -28,9 +30,6 @@ function main() {
   app.setNotFoundHandler((req, res) => {
     res.sendFile("index.html");
   });
-
-  app.register(fp(cors));
-  app.register(routes, { prefix: "/api" });
 
   app.listen(process.env.PORT, process.env.HOST, () => {
     console.log(
